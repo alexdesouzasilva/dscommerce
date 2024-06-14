@@ -23,7 +23,7 @@ public class User {
     @Column(unique = true) // Não deixar o campo se repetir na tabela (UNIQUE)
     private String email;
     private String phone;
-    private LocalDate birthDate;
+    private LocalDate birthDate; //LocalDate -> 1994-05-11
     private String password;
 
     //Relacionamento com a classe Order

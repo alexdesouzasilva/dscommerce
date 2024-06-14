@@ -27,7 +27,7 @@ public class Order {
     private Long id;
     // Caso não seja passado o fuso horário, será usado como padrão GMT de Londres
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant moment;
+    private Instant moment; // Inserir dessa forma para não dar conflitos entre banco de dados: TIMESTAMP WITH TIME ZONE '2022-07-25T13:00:00Z
     private OrderStatus status;
 
     //Muitos pedidos para um cliente
