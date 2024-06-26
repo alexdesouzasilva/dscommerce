@@ -28,5 +28,19 @@ public class ProductService {
         return result.map(x -> new ProductDTO(x)); // Converte Page<Product> para Page<ProductDTO>
         // Como Page já é um stream, não precisamos convertê-lo usando stream()
     }
+
+    @Transactional // Sem o readOnly, pois irá salvar um dado no BD.
+    public ProductDTO insert(ProductDTO dto) {
+        Product entity = new Product();
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        entity.setPrice(dto.getPrice());
+        entity.setImgUrl(dto.getImgUrl());
+
+        entity = repository.save(entity);
+
+        return new ProductDTO(entity);
+
+    }
     
 }
