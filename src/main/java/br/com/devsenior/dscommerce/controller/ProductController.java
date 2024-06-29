@@ -17,7 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.devsenior.dscommerce.dto.ProductDTO;
 import br.com.devsenior.dscommerce.services.ProductService;
-import lombok.Delegate;
+
 
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping(value = "/products")
 public class ProductController {
 
+    //Exceções de ResourceNotFound estão sendo tratadas no pacote handlers:
+    //ControllerExceptionHandler
 
     @Autowired
     private ProductService service;
@@ -37,7 +39,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) { //Paeable para paginação.
+    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) { //Pageable para paginação.
         Page<ProductDTO> dto = service.findAll(pageable);
         return ResponseEntity.ok(dto);
     }
