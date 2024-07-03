@@ -17,7 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.devsenior.dscommerce.dto.ProductDTO;
 import br.com.devsenior.dscommerce.services.ProductService;
-
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -44,8 +44,9 @@ public class ProductController {
         return ResponseEntity.ok(dto);
     }
 
+    //@Valid -> Irá verificar as validações inseridas nos atributos do DTO
     @PostMapping
-    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) { //Corpo da requisição
+    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) { //Corpo da requisição
         dto = service.insert(dto);
         // ** Boas práticas ao realizar um post:
         // Pega a URI corrente http://localhost:8080/products e concatena com o id e retorna para o usuário
@@ -54,8 +55,9 @@ public class ProductController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    //@Valid -> Adicionar antes do RequestBody, pois o corpo da requisição que será analisado
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @RequestBody ProductDTO dto) {
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }

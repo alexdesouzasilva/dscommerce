@@ -4,10 +4,12 @@ import java.time.Instant;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import br.com.devsenior.dscommerce.dto.CustomError;
+import br.com.devsenior.dscommerce.dto.ValidationError;
 import br.com.devsenior.dscommerce.services.exceptions.DataBaseException;
 import br.com.devsenior.dscommerce.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +23,8 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class ControllerExceptionHandler {
+
+    //Sempre olhar a exceção lançada pelo framework e tratá-la
 
     /*
      * Método para tratar erro 404 - Not Found - De forma customizada
@@ -41,4 +45,17 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
     
+    // Tratamento de mensagem do Bean validation das classes DTO
+    // para retornar as message descritas nas validações
+    // CustomError -> Super tipo de ValidationError
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<CustomError> MethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY; // STATUS 422
+        ValidationError err = new ValidationError(Instant.now(), status.value(), "Dados inválidos", request.getRequestURI());
+        //Pegando campos e mensagens de erro que adicionamos no DTO.
+        for (FieldError f : e.getBindingResult().getFieldErrors()) {
+           err.addError(f.getField(), f.getDefaultMessage()); 
+        }
+        return ResponseEntity.status(status).body(err);
+    }
 }
