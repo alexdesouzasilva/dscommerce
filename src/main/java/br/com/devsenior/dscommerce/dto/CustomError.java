@@ -4,8 +4,7 @@ import java.time.Instant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 /*
  * Response Default de Erro do Spring para Recurso Não Encontrado:
