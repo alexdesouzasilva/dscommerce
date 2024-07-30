@@ -32,8 +32,8 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true) // lock de apenas leitura. Deixa mais rápido
-    public Page<ProductDTO> findAll(Pageable pageable) {
-        Page<Product> result = repository.findAll(pageable); // Retorna Collection Page do tipo Product
+    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+        Page<Product> result = repository.searchByName(name, pageable); // Retorna Collection Page do tipo Product
         return result.map(x -> new ProductDTO(x)); // Converte Page<Product> para Page<ProductDTO>
         // Como Page já é um stream, não precisamos convertê-lo usando stream()
     }
