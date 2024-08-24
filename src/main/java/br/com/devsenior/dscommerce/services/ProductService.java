@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.devsenior.dscommerce.dto.ProductDTO;
+import br.com.devsenior.dscommerce.dto.ProductMinDTO;
 import br.com.devsenior.dscommerce.entities.Product;
 import br.com.devsenior.dscommerce.repositories.ProductRepository;
 import br.com.devsenior.dscommerce.services.exceptions.DataBaseException;
@@ -32,9 +33,9 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true) // lock de apenas leitura. Deixa mais rápido
-    public Page<ProductDTO> findAll(String name, Pageable pageable) {
+    public Page<ProductMinDTO> findAll(String name, Pageable pageable) {
         Page<Product> result = repository.searchByName(name, pageable); // Retorna Collection Page do tipo Product
-        return result.map(x -> new ProductDTO(x)); // Converte Page<Product> para Page<ProductDTO>
+        return result.map(x -> new ProductMinDTO(x)); // Converte Page<Product> para Page<ProductDTO>
         // Como Page já é um stream, não precisamos convertê-lo usando stream()
     }
 
