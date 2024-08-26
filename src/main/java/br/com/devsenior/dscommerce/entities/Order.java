@@ -87,10 +87,22 @@ public class Order {
         this.client = client;
     }
 
-    // Acessando produtos através do pedido
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    // Acessando produtos através do pedido
     public List<Product> getProducts() {
         return items.stream().map(x -> x.geProduct()).toList();
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
 
@@ -119,6 +131,8 @@ public class Order {
             return false;
         return true;
     }
-    
+
+
+
     
 }
