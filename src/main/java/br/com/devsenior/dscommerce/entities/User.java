@@ -120,6 +120,7 @@ public class User implements UserDetails{
     }
 
     // Verifica se usuário possuí role
+    //Método auxiliar para tratamento do forbidden, será usando por AuthService.
     public boolean hasRole(String roleName) {
         for (Role role : roles) {
             if (role.getAuthority().equals(roleName)) {
